@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Registration suite">
+
+    <parameter name="browser" value="chrome"/>
+    <parameter name="server" value="localhost"/>
+
+    <test name="Registration_001_RegistrationClientFormTest">
+        <classes>
+            <class name="registerTests.Registration_001_RegistrationClientFormTest"/>
+        </classes>
+    </test>
+    <test name="Registration_002_RegisterEmptyFieldsTest">
+        <classes>
+            <class name="registerTests.Registration_002_RegisterEmptyFieldsTest"/>
+        </classes>
+    </test>
+    <test name="Registration_003_RegisterEmptyPasswordTest">
+        <classes>
+            <class name="registerTests.Registration_003_RegisterEmptyPasswordTest"/>
+        </classes>
+    </test>
+    <test name="Registration_004_RegisterPasswordLengthTest">
+        <classes>
+            <class name="registerTests.Registration_004_RegisterPasswordLengthTest"/>
+        </classes>
+    </test>
+    <test name="Registration_005_RegisterClientTest">
+        <classes>
+            <class name="registerTests.Registration_005_RegisterClientTest"/>
+        </classes>
+    </test>
+</suite>

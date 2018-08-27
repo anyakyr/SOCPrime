@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Login suite">
+
+    <parameter name="browser" value="chrome"/>
+    <parameter name="server" value="localhost"/>
+
+    <test name="Login_001_LoginFormTest">
+        <classes>
+            <class name="loginTests.Login_001_LoginFormTest"/>
+        </classes>
+    </test>
+    <test name="Login_002_LoginEmptyFormFieldsTest">
+        <classes>
+            <class name="loginTests.Login_002_LoginEmptyFormFieldsTest"/>
+        </classes>
+    </test>
+    <test name="Login_003_LoginInvalidCredentialsTest">
+        <classes>
+            <class name="loginTests.Login_003_LoginInvalidCredentialsTest"/>
+        </classes>
+    </test>
+    <test name="Login_004_LoginValidTest">
+        <classes>
+            <class name="loginTests.Login_004_LoginValidTest"/>
+        </classes>
+    </test>
+</suite>
