@@ -213,6 +213,19 @@ public class WebElementService {
         }
     }
 
+    public static WebElement GetWebElementByText (List<WebElement> elements, final String elementText) {
+        Predicate<WebElement> predicate = new Predicate<WebElement>() {
+            public boolean apply(WebElement element) {
+                return element.getText().equals(elementText);
+            }
+        };
+        Collection<WebElement> filtered = Collections2.filter(elements, predicate);
+        if (!filtered.isEmpty()) {
+            return filtered.iterator().next();
+        }
+        return null;
+    }
+
     public static WebElement getElement(By locator, WebElement parent) {
         WebElement element = null;
         boolean flag = true;

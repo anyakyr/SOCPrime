@@ -29,11 +29,8 @@ public class Booking_001_SearchTest extends BaseTest{
                 "Check Price Button is NOT displayed");
 
         bookingPage.enterDestinationToInput();
-
-        bookingPage.clickOnCheckInDate();
-        bookingPage.clickOnNextMonthButton();
-        bookingPage.clickOnSelectCheckInDate();
-        bookingPage.clickOnSelectCheckOutDate();
+        bookingPage.setCheckInDate("14", "Октябрь 2018");
+        bookingPage.setCheckOutDate("20", "Октябрь 2018");
         bookingPage.clickOnCheckPriceButton();
 
         bookingPage.checkLocation("Нью-Йорк");

@@ -4,11 +4,14 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utility.Log;
+
+import java.util.Calendar;
 import java.util.List;
 
 import java.util.Random;
 
 import static utility.services.WebElementService.*;
+
 
 /**
  * Created by Anya on 23.08.2018.
@@ -63,12 +66,6 @@ public class BookingPage {
     @FindBy(xpath = "//input[@autocomplete='username email']")
     public WebElement regEmailInput;
 
-    @FindBy(xpath="//*[@id='frm']/div[1]/div[2]/div/div[2]/div/div/div/div[2]/div[2]/div[3]/div/div/div[3]/table/tbody/tr[2]/td[7]/span[contains(text(), '14')]")
-    public WebElement selectCheckInDate;
-
-    @FindBy(xpath="//*[@id='frm']/div[1]/div[2]/div/div[3]/div/div/div/div[2]/div[2]/div[3]/div/div/div[3]/table/tbody/tr[3]/td[6]/span")
-    public WebElement selectCheckOutDate;
-
     @FindBy(className = "c2-month-header-monthname")
     public List<WebElement> months;
 
@@ -78,7 +75,14 @@ public class BookingPage {
     @FindBy(className = "district_link")
     public List <WebElement> linkList;
 
+    @FindBy(className = "b-datepicker")
+    public List<WebElement> calendars;
+
+    private static final String GET_DAYS = "//table[@class='c2-month-table'][descendant::th[@class='c2-month-header-monthname'][text()='%s']]//span[@class='c2-day-inner'][normalize-space(text())!='']";
+    private static final String MISSMATCH_DATE_EXEPTION = "Mismatch date";
     private static final String WRONG_SEARCH_RESULT_EXEPTION = "Wrong search results";
+
+
     protected WebDriver driver;
 
     public BookingPage(WebDriver driver) {
@@ -108,22 +112,6 @@ public class BookingPage {
 
     public void clickOnCheckPriceButton() {
         clickOnElement(checkPriceButton, "Check Price Button", driver);
-    }
-
-    public void clickOnCheckInDate() {
-        clickOnElement(checkInDate, "Check In Date", driver);
-    }
-
-    public void clickOnCheckOutDate() {
-        clickOnElement(checkOutDate, "Check Out Date", driver);
-    }
-
-    public void clickOnSelectCheckInDate() {
-        clickOnElement(selectCheckInDate, "Select Check In Date", driver);
-    }
-
-    public void clickOnSelectCheckOutDate() {
-            clickOnElement(selectCheckOutDate, "Select Check Out Date", driver);
     }
 
     public void clickOnLogintoAccButton() {
@@ -160,8 +148,35 @@ public class BookingPage {
         }
     }
 
-    public void clickOnNextMonthButton() {
-            clickOnElement(nextMonthButton, "Next Month Button", driver);
+    public void setCheckInDate(String dayStart, String monthText) throws InterruptedException {
+        WebElement picker = calendars.get(0);
+        picker.click();
+
+        for (int i = 0; i < 9 - Calendar.getInstance().get(Calendar.MONTH); i++) {
+            nextMonthButton.click();
+        }
+        WebElement month = GetWebElementByText(months, monthText);
+        if (month == null) {
+            throw new InterruptedException(MISSMATCH_DATE_EXEPTION);
+        }
+        String xPath = String.format(GET_DAYS, monthText);
+        List<WebElement> days = driver.findElements(By.xpath(xPath));
+        WebElement daystart = GetWebElementByText(days, dayStart);
+        daystart.click();
+        Log.info(String.format("CheckIn date %s %s set", dayStart, monthText));
     }
 
+    public void setCheckOutDate(String dayEnd, String monthText) throws InterruptedException {
+        WebElement picker = calendars.get(1);
+
+        WebElement month = GetWebElementByText(months, monthText);
+        if (month == null) {
+            throw new InterruptedException(MISSMATCH_DATE_EXEPTION);
+        }
+        String xPath = String.format(GET_DAYS, monthText);
+        List<WebElement> days = driver.findElements(By.xpath(xPath));
+        WebElement dayend = GetWebElementByText(days, dayEnd);
+        dayend.click();
+        Log.info(String.format("CheckOut date %s %s set", dayEnd, monthText));
+    }
 }
